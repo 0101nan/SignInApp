@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_basic"
+            android:icon="@drawable/ic_home"
+            android:title="基本信息"/>
+        <item
+            android:id="@+id/nav_all"
+            android:icon="@drawable/ic_person"
+            android:title="所有人员"/>
+        <item
+            android:id="@+id/nav_wait"
+            android:icon="@drawable/ic_wait"
+            android:title="暂未签到"/>
+        <item
+            android:id="@+id/nav_leave"
+            android:icon="@drawable/ic_leave"
+            android:title="请假人员"/>
+        <item
+            android:id="@+id/nav_clear"
+            android:icon="@drawable/ic_del"
+            android:title="清空数据"/>
+    </group>
+</menu>
