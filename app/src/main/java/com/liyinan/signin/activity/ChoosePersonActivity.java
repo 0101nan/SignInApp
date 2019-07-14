@@ -62,7 +62,8 @@ public class ChoosePersonActivity extends AppCompatActivity {
                 }else if (currentLevel==LEVEL_PERSON){
                     selectedPerson=personList.get(position);
                     AlertDialog.Builder dialog=new AlertDialog.Builder(ChoosePersonActivity.this);
-                    dialog.setTitle("确认签到？");
+                    dialog.setTitle(selectedPerson.getName());
+                    dialog.setMessage("确认签到？");
                     dialog.setCancelable(true);
                     dialog.setPositiveButton("签到", new DialogInterface.OnClickListener() {
                         @Override
