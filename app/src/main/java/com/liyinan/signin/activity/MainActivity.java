@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int ALL_PERSON=2;
     public static final int WAIT_PERSON=3;
     public static final int LEAVE_PERSON=4;
+    public static final int SET_LEAVE=5;
     private FloatingActionButton floatingActionButton;
     private AQIView aqiView;
     private Toolbar toolbar;
@@ -122,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         clearAllData();
                         break;
+                    case R.id.nav_set_leave:
+                        intent.putExtra("extra_nav",SET_LEAVE);
+                        startActivity(intent);
+                        break;
                 }
                 return true;
             }
@@ -147,16 +152,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAqiView(){
         int num=0;
+        int leave_num=0;
         personList= LitePal.findAll(Person.class);
         for (Person person:personList) {
             if(person.isSignIn()==true){
                 num++;
             }
+            if(person.isLeave()==true){
+                leave_num++;
+            }
         }
         int progress=100*num/personList.size();
         aqiView.setProgress(progress);
         signedNumText.setText(String.valueOf(num));
-        leaveNumText.setText(String.valueOf(0));
+        leaveNumText.setText(String.valueOf(leave_num));
     }
 
     //按两次退出
@@ -185,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 personList= LitePal.findAll(Person.class);
                 for (Person person:personList) {
                     person.setSignIn(false);
+                    person.setLeave(false);
                     person.save();
                 }
                 setAqiView();

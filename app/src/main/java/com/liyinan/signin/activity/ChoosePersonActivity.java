@@ -32,6 +32,7 @@ public class ChoosePersonActivity extends AppCompatActivity {
     public static final int ALL_PERSON=2;
     public static final int WAIT_PERSON=3;
     public static final int LEAVE_PERSON=4;
+    public static final int SET_LEAVE=5;
     private List<Departmant> departmantList=new ArrayList<>();
     private List<Person> personList=new ArrayList<>();
     private ListView listView;
@@ -86,6 +87,33 @@ public class ChoosePersonActivity extends AppCompatActivity {
                         }
                     });
                     dialog.show();
+                }else if (currentLevel==ALL_PERSON){
+                    selectedPerson=personList.get(position);
+                    AlertDialog.Builder dialog=new AlertDialog.Builder(ChoosePersonActivity.this);
+                    dialog.setTitle(selectedPerson.getName());
+                    dialog.setMessage("确认请假 ？");
+                    dialog.setCancelable(true);
+                    dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (selectedPerson.isLeave()==true){
+                                Toast.makeText(ChoosePersonActivity.this, "已请假", Toast.LENGTH_SHORT).show();
+                            }else{
+                                selectedPerson.setLeave(true);
+                                selectedPerson.save();
+                                Toast.makeText(ChoosePersonActivity.this, "请假成功", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(ChoosePersonActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dialog.show();
                 }
             }
         });
@@ -96,6 +124,8 @@ public class ChoosePersonActivity extends AppCompatActivity {
             queryWaitPerson();
         }else if(extra_nav==LEAVE_PERSON){
             queryLeavePerson();
+        }else if(extra_nav==SET_LEAVE){
+            queryAllPerson();
         }else{
             queryDepartment();
         }
@@ -134,6 +164,8 @@ public class ChoosePersonActivity extends AppCompatActivity {
             for(Person person:personList){
                 if(person.isSignIn()==true){
                     dataList.add(person.getName()+"——已签到");
+                }else if(person.isLeave()==true){
+                    dataList.add(person.getName()+"——已请假");
                 }else{
                     dataList.add(person.getName());
                 }
@@ -165,6 +197,8 @@ public class ChoosePersonActivity extends AppCompatActivity {
             for(Person person:personList){
                 if(person.isSignIn()==true){
                     dataList.add(person.getName()+"——已签到");
+                }else if(person.isLeave()==true){
+                    dataList.add(person.getName()+"——已请假");
                 }else{
                     dataList.add(person.getName());
                 }
@@ -192,7 +226,7 @@ public class ChoosePersonActivity extends AppCompatActivity {
         if(personList.size()>0){
             dataList.clear();
             for(Person person:personList){
-                if(person.isSignIn()==false){
+                if(person.isSignIn()==false && person.isLeave()==false){
                     dataList.add(person.getName());
                 }
             }

@@ -18,6 +18,10 @@
             android:icon="@drawable/ic_leave"
             android:title="请假人员"/>
         <item
+            android:id="@+id/nav_set_leave"
+            android:icon="@drawable/ic_set_leave"
+            android:title="请假"/>
+        <item
             android:id="@+id/nav_clear"
             android:icon="@drawable/ic_del"
             android:title="清空数据"/>
